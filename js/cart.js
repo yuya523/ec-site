@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
       totalPriceEl.textContent = `合計金額：${totalValue.toLocaleString()}円`;
     });
 
-  purchaseBtn.addEventListener('click', () => {
-    // thankspage.html に遷移（GA4イベント送信はそちらで処理）
-    window.location.href = 'thankspage.html';
-  });
+    purchaseBtn.addEventListener('click', () => {
+    window.location.href = 'checkout.html'; // ← thankspage ではなく checkoutへ
+    });
+
 });

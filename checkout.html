@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>お客様情報の入力</title>
+</head>
+<body>
+  <h1>お客様情報の入力</h1>
+  <form id="checkout-form">
+    <label>
+      お名前（必須）:<br>
+      <input type="text" id="name" required>
+    </label><br><br>
+    <label>
+      メールアドレス（必須）:<br>
+      <input type="email" id="email" required>
+    </label><br><br>
+    <label>
+      お届け先住所（任意）:<br>
+      <input type="text" id="address">
+    </label><br><br>
+    <button type="submit">購入を確定する</button>
+  </form>
+
+  <script src="js/checkout.js"></script>
+</body>
+</html>
