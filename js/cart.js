@@ -5,16 +5,16 @@ fetch('/ec-site/data/products.json') // リポジトリ名に応じて調整
     const container = document.getElementById('cart-items');
     let total = 0;
 
-    Object.keys(cart).forEach(id => {
-      const product = products.find(p => p.id === id);
+    Object.keys(cart).forEach(productId => {
+      const product = products.find(p => p.id === productId);
       if (product) {
-        const quantity = cart[id];
-        const subtotal = product.price * quantity;
-        total += subtotal;
+        const quantity = cart[productId];
+        const price = product.price;
+        totalValue += price * quantity;
 
         const item = document.createElement('div');
         item.innerHTML = `
-          <p>${product.name} × ${quantity}：¥${subtotal.toLocaleString()}</p>
+          <p>${product.name} × ${quantity}：¥${totalValue.toLocaleString()}</p>
         `;
         container.appendChild(item);
       }
