@@ -1,0 +1,44 @@
+[
+  {
+    "id": "p001",
+    "name": "オーガニックフェイスオイル",
+    "price": 3200,
+    "image": "images/face-oil.jpg",
+    "description": "自然由来成分100%の保湿オイルです。"
+  },
+  {
+    "id": "p002",
+    "name": "ハーバルクレンジングジェル",
+    "price": 2800,
+    "image": "images/cleansing.jpg",
+    "description": "乾燥しがちな肌にも優しく洗浄します。"
+  }
+  {
+    "id": "p003",
+    "name": "フローラルローション",
+    "price": 2800,
+    "image": "images/lotion.jpg",
+    "description": "乾燥しがちな肌に水分補給。"
+  }
+  {
+    "id": "p004",
+    "name": "ナチュラルソープ",
+    "price": 2800,
+    "image": "images/soap.jpg",
+    "description": "天然成分で作られた優しい石鹸です。"
+  }
+  {
+    "id": "p005",
+    "name": "オーガニックフェイスマスク",
+    "price": 2800,
+    "image": "images/facemask.jpg",
+    "description": "肌に潤いを与えるオーガニックマスクです。"
+  }
+  {
+    "id": "p006",
+    "name": "ハーブエッセンスクリーム",
+    "price": 2800,
+    "image": "images/cream.jpg",
+    "description": "肌をしっかり保湿するクリームです。"
+  }
+]
