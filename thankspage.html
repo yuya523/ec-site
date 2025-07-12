@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ご注文ありがとうございました</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Y6LTF5EQM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-4Y6LTF5EQM');
+  </script>
+</head>
+<body>
+  <h1>ご注文ありがとうございます！</h1>
+  <p>ご注文が正常に完了しました。</p>
+  <a href="index.html">トップページに戻る</a>
+
+  <!-- thankyou.html の <body> の最後に追加 -->
+  <script>
+    const cart = JSON.parse(localStorage.getItem('cart')) || {};
+    const transactionId = 'T' + Date.now(); // 簡易な購入ID
+
+    // 商品データを取得（JSONファイルから）
+    fetch('/ec-site/data/products.json') // リポジトリ名に応じて修正
+    .then(res => res.json())
+    .then(products => {
+      let totalValue = 0;
+      const items = [];
+
+      Object.keys(cart).forEach(productId => {
+        const product = products.find(p => p.id === productId);
+        if (product) {
+          const quantity = cart[productId];
+          const price = product.price;
+          totalValue += price * quantity;
+
+          items.push({
+            item_id: product.id,
+            item_name: product.name,
+            quantity: quantity,
+            price: price
+          });
+        }
+      });
+
+      if (window.gtag && items.length > 0) {
+        gtag('event', 'purchase', {
+          transaction_id: transactionId,
+          value: totalValue,
+          currency: 'JPY',
+          items: items,
+        });
+      }
+
+      // 購入後にカートをクリア（任意：まだ未削除なら）
+      localStorage.removeItem('cart');
+    });
+  </script>
+</body>
+</html>
