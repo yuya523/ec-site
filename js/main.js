@@ -1,3 +1,4 @@
+// 商品一覧の読み込み
 fetch('/ec-site/data/products.json')
   .then(response => response.json())
   .then(products => {
@@ -19,3 +20,21 @@ fetch('/ec-site/data/products.json')
     });
   })
   .catch(error => console.error('商品データの読み込みエラー:', error));
+
+// ▼ カートに入れる処理（fetchの外）
+document.addEventListener('click', function(e) {
+  if (e.target.tagName === 'BUTTON' && e.target.dataset.id) {
+    const productId = e.target.dataset.id;
+    let cart = JSON.parse(localStorage.getItem('cart')) || {};
+    cart[productId] = (cart[productId] || 0) + 1;
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert('カートに追加しました');
+
+    // ▼ GA4イベント送信（オプション）
+    if (window.gtag) {
+      gtag('event', 'add_to_cart', {
+        items: [{ item_id: productId }]
+      });
+    }
+  }
+});
