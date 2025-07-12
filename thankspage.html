@@ -21,11 +21,10 @@
 
   <!-- thankyou.html の <body> の最後に追加 -->
   <script>
-    const cart = JSON.parse(localStorage.getItem('cart')) || {};
-    const transactionId = 'T' + Date.now(); // 簡易な購入ID
+  const cart = JSON.parse(localStorage.getItem('cart')) || {};
+  const transactionId = 'T' + Date.now();
 
-    // 商品データを取得（JSONファイルから）
-    fetch('/ec-site/data/products.json') // リポジトリ名に応じて修正
+  fetch('/ec-site/data/products.json')
     .then(res => res.json())
     .then(products => {
       let totalValue = 0;
@@ -36,7 +35,8 @@
         if (product) {
           const quantity = cart[productId];
           const price = product.price;
-          totalValue += price * quantity;
+          const subtotal = price * quantity;
+          totalValue += subtotal;
 
           items.push({
             item_id: product.id,
@@ -56,9 +56,8 @@
         });
       }
 
-      // 購入後にカートをクリア（任意：まだ未削除なら）
       localStorage.removeItem('cart');
     });
-  </script>
+</script>
 </body>
 </html>
