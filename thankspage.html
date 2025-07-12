@@ -42,7 +42,8 @@
             item_id: product.id,
             item_name: product.name,
             quantity: quantity,
-            price: price
+            price: Number(product.price),
+            currency: 'JPY',
           });
         }
       });
