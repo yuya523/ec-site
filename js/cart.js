@@ -26,7 +26,7 @@ fetch('/ec-site/data/products.json') // リポジトリ名に応じて調整
   });
 
 document.getElementById('checkout-btn').addEventListener('click', () => {
-  // GA4購入イベントをここに追加してもOK
-  localStorage.removeItem('cart');
-  window.location.href = 'thankyou.html';
+    // GA4購入イベントをここに追加してもOK
+    localStorage.removeItem('cart');
+    window.location.href = 'thankspage.html';
 });
