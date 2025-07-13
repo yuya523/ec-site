@@ -15,8 +15,8 @@ document.getElementById('checkout-form').addEventListener('submit', function (e)
     pref: document.getElementById('pref').value,
     address1: document.getElementById('address1').value,
     address2: document.getElementById('address2').value,
-    delivery_date: document.getElementById('delivery_date').value,
-    note: document.getElementById('note').value
+    delivery_date: document.getElementById('delivery_date')?.value || '',
+    note: document.getElementById('note')?.value || ''
   };
     // 簡易バリデーション
     if (!lastname || !firstname || !email || !tel || !zipcode || !pref || !address1) {
