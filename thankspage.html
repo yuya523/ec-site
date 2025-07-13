@@ -10,7 +10,6 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-4Y6LTF5EQM', { 'debug_mode':true });
   </script>
 </head>
@@ -21,6 +20,7 @@
 
   <!-- thankyou.html の <body> の最後に追加 -->
   <script>
+    const customer = JSON.parse(localStorage.getItem('customer'));
     const cart = JSON.parse(localStorage.getItem('cart')) || {};
     const transactionId = 'T' + Date.now();
 
@@ -37,7 +37,6 @@
           const price = product.price;
           const subtotal = price * quantity;
           totalValue += subtotal;
-
           items.push({
             item_id: product.id,
             item_name: product.name,
@@ -48,32 +47,48 @@
         }
       });
 
-      if (window.gtag && items.length > 0) {
-        gtag('event', 'purchase', {
-          transaction_id: transactionId,
-          value: totalValue,
-          currency: 'JPY',
-          items: items,
+        // ✅ GA4 イベント送信（purchase）
+        if (window.gtag && customer) {
+          gtag('config', 'G-4Y6LTF5EQM', {
+            user_id: customer.user_id
+          });
+
+          gtag('set', 'user_properties', {
+            name: customer.name,
+            pref: customer.address.split(' ')[1] || '',
+            delivery_date: customer.delivery_date || '指定なし'
+          });
+
+          gtag('event', 'purchase', {
+            transaction_id: transactionId,
+            value: totalValue,
+            currency: 'JPY',
+            items: items
+          });
+        }
+        // ✅ Webhook 送信（Apps Script）
+        fetch('https://script.google.com/macros/s/AKfycbz4W43rfEXC7mWPnN_V9wSCLzuznGvqR3wYjgNyFF5805qs1H9xHe_Tfus9BIBMlU7D/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            transaction_id: transactionId,
+            customer: customer,
+            totalValue: totalValue,
+            items: items
+          })
+        })
+        .then(res => res.json())
+        .then(resp => {
+          console.log('Sheet save response:', resp);
+        })
+        .catch(err => {
+          console.error('Sheet save error:', err);
         });
-      }
 
-      localStorage.removeItem('cart');
-    });
-    const customer = JSON.parse(localStorage.getItem('customer'));
-
-    if (customer && window.gtag) {
-    // メールアドレスではなく、自動生成された user_id を送信
-    gtag('config', 'G-4Y6LTF5EQM', {
-    user_id: customer.user_id
-    });
-
-    // 属性情報も user_properties で送信
-    gtag('set', 'user_properties', {
-    name: customer.name,
-    pref: customer.address.split(' ')[1] || '',
-    delivery_date: customer.delivery_date || '指定なし'
-    });
-    }
+        // ✅ ローカルストレージをクリア
+        localStorage.removeItem('cart');
+        // localStorage.removeItem('customer'); ← customerは保持する場合は削除しない
+      });
   </script>
 </body>
 </html>
