@@ -69,20 +69,13 @@
         // ✅ Webhook 送信（Apps Script）
         fetch('https://script.google.com/macros/s/AKfycbz4W43rfEXC7mWPnN_V9wSCLzuznGvqR3wYjgNyFF5805qs1H9xHe_Tfus9BIBMlU7D/exec', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `data=${encodeURIComponent(JSON.stringify({
             transaction_id: transactionId,
             customer: customer,
             totalValue: totalValue,
             items: items
-          })
-        })
-        .then(res => res.json())
-        .then(resp => {
-          console.log('Sheet save response:', resp);
-        })
-        .catch(err => {
-          console.error('Sheet save error:', err);
+          }))}`
         });
 
         // ✅ ローカルストレージをクリア
