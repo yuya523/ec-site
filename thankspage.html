@@ -21,10 +21,10 @@
 
   <!-- thankyou.html の <body> の最後に追加 -->
   <script>
-  const cart = JSON.parse(localStorage.getItem('cart')) || {};
-  const transactionId = 'T' + Date.now();
+    const cart = JSON.parse(localStorage.getItem('cart')) || {};
+    const transactionId = 'T' + Date.now();
 
-  fetch('/ec-site/data/products.json')
+    fetch('/ec-site/data/products.json')
     .then(res => res.json())
     .then(products => {
       let totalValue = 0;
@@ -59,6 +59,21 @@
 
       localStorage.removeItem('cart');
     });
-</script>
+    const customer = JSON.parse(localStorage.getItem('customer'));
+
+    if (customer && window.gtag) {
+    // メールアドレスではなく、自動生成された user_id を送信
+    gtag('config', 'G-4Y6LTF5EQM', {
+    user_id: customer.user_id
+    });
+
+    // 属性情報も user_properties で送信
+    gtag('set', 'user_properties', {
+    name: customer.name,
+    region: customer.address.slice(0, 3),
+    delivery_date: customer.delivery_date || '指定なし'
+    });
+    }
+  </script>
 </body>
 </html>

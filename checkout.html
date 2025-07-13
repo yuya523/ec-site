@@ -7,20 +7,25 @@
 <body>
   <h1>お客様情報の入力</h1>
   <form id="checkout-form">
-    <label>
-      お名前（必須）:<br>
-      <input type="text" id="name" required>
-    </label><br><br>
-    <label>
-      メールアドレス（必須）:<br>
-      <input type="email" id="email" required>
-    </label><br><br>
-    <label>
-      お届け先住所（任意）:<br>
-      <input type="text" id="address">
-    </label><br><br>
+    <h2>お客様情報</h2>
+    <label>お名前（姓）：<input type="text" id="last-name" required></label><br>
+    <label>お名前（名）：<input type="text" id="first-name" required></label><br>
+    <label>メールアドレス：<input type="email" id="email" required></label><br>
+    <label>電話番号：<input type="tel" id="tel" required></label><br><br>
+
+    <h2>お届け先</h2>
+    <label>郵便番号：<input type="text" id="zipcode" required></label><br>
+    <label>都道府県：<input type="text" id="pref" required></label><br>
+    <label>市区町村・番地：<input type="text" id="address1" required></label><br>
+    <label>建物名・部屋番号（任意）：<input type="text" id="address2"></label><br><br>
+
+    <h2>その他</h2>
+    <label>配送希望日時（任意）：<input type="datetime-local" id="delivery-date"></label><br>
+    <label>備考欄（任意）：<textarea id="note"></textarea></label><br><br>
+
     <button type="submit">購入を確定する</button>
   </form>
+
 
   <script src="js/checkout.js"></script>
 </body>
