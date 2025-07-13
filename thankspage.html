@@ -55,7 +55,7 @@
 
           gtag('set', 'user_properties', {
             name: customer.name,
-            pref: customer.address.split(' ')[1] || '',
+            pref: customer.pref || '',
             delivery_date: customer.delivery_date || '指定なし'
           });
 
@@ -71,7 +71,18 @@
         const webhookUrl = 'https://script.google.com/macros/s/AKfycbz4W43rfEXC7mWPnN_V9wSCLzuznGvqR3wYjgNyFF5805qs1H9xHe_Tfus9BIBMlU7D/exec';
         const payload = {
           transaction_id: transactionId,
-          customer: customer,
+          customer: {
+            user_id: customer.user_id || '',
+            name: customer.name || '',
+            email: customer.email || '',
+            tel: customer.tel || '',
+            zipcode: customer.zipcode || '',
+            pref: customer.pref || '',
+            address1: customer.address1 || '',
+            address2: customer.address2 || '',
+            delivery_date: customer.delivery_date || '',
+            note: customer.note || ''
+          },
           totalValue: totalValue,
           items: items
         };
