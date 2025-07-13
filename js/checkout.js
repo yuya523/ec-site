@@ -19,7 +19,7 @@ document.getElementById('checkout-form').addEventListener('submit', function (e)
     note: document.getElementById('note').value
   };
     // 簡易バリデーション
-    if (!lastName || !firstName || !email || !tel || !zipcode || !pref || !address1) {
+    if (!lastname || !firstname || !email || !tel || !zipcode || !pref || !address1) {
       alert('※ 必須項目が未入力です。');
       return;
     }
