@@ -70,6 +70,7 @@
     // 属性情報も user_properties で送信
     gtag('set', 'user_properties', {
     name: customer.name,
+    pref: customer.address.split(' ')[1] || '',
     region: customer.pref,
     delivery_date: customer.delivery_date || '指定なし'
     });
