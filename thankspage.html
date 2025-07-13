@@ -66,16 +66,31 @@
             items: items
           });
         }
-        // ✅ Webhook 送信（Apps Script）
-        fetch('https://script.google.com/macros/s/AKfycbz4W43rfEXC7mWPnN_V9wSCLzuznGvqR3wYjgNyFF5805qs1H9xHe_Tfus9BIBMlU7D/exec', {
+
+        // ✅ スプレッドシートへ送信（CORS回避バージョン）
+        const webhookUrl = 'https://script.google.com/macros/s/AKfycbz4W43rfEXC7mWPnN_V9wSCLzuznGvqR3wYjgNyFF5805qs1H9xHe_Tfus9BIBMlU7D/exec';
+        const payload = {
+          transaction_id: transactionId,
+          customer: customer,
+          totalValue: totalValue,
+          items: items
+        };
+
+        const formBody = `data=${encodeURIComponent(JSON.stringify(payload))}`;
+
+        fetch(webhookUrl, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: `data=${encodeURIComponent(JSON.stringify({
-            transaction_id: transactionId,
-            customer: customer,
-            totalValue: totalValue,
-            items: items
-          }))}`
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: formBody
+        })
+        .then(res => res.json())
+        .then(resp => {
+          console.log('Sheet save response:', resp);
+        })
+        .catch(err => {
+          console.error('Sheet save error:', err);
         });
 
         // ✅ ローカルストレージをクリア
